@@ -407,8 +407,8 @@ export function LandingPage() {
                             © 2025 Libro. All rights reserved.
                         </p>
                         <div className="flex gap-6 text-sm">
-                            <a href="#" className="hover:text-emerald-400 transition-colors">Privacy Policy</a>
-                            <a href="#" className="hover:text-emerald-400 transition-colors">Terms of Service</a>
+                            <Link to="/privacy" className="hover:text-emerald-400 transition-colors">Privacy Policy</Link>
+                            <Link to="/terms" className="hover:text-emerald-400 transition-colors">Terms of Service</Link>
                         </div>
                     </div>
                 </div>

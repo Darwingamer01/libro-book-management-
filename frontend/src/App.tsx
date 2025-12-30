@@ -8,6 +8,8 @@ import UserDashboard from '@/pages/UserDashboard';
 import BookDetail from '@/pages/BookDetail';
 import BookReader from '@/pages/BookReader';
 import AdminDashboard from '@/pages/AdminDashboard';
+import PrivacyPolicy from '@/pages/PrivacyPolicy';
+import TermsOfService from '@/pages/TermsOfService';
 import { AuthProvider } from '@/context/AuthContext';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 
@@ -21,6 +23,8 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
 
             {/* Protected User Routes */}
             <Route element={<ProtectedRoute />}>

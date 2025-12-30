@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../services/api';
@@ -6,8 +6,14 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { useToast } from '../hooks/use-toast';
-import { BookOpen, ArrowLeft, Eye, EyeOff, User } from 'lucide-react';
+import { BookOpen, ArrowLeft, Eye, EyeOff, User, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+
+interface SavedUser {
+    username: string;
+    password?: string; // Added for demo purposes, not recommended for production
+    avatarOffset: number;
+}
 
 export default function Login() {
     const [username, setUsername] = useState('');
@@ -15,10 +21,16 @@ export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
     const [showCredentials, setShowCredentials] = useState(false);
+    const [savedUsers, setSavedUsers] = useState<SavedUser[]>([]);
     const { login } = useAuth();
     const navigate = useNavigate();
     const { toast } = useToast();
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        const users = JSON.parse(localStorage.getItem('rememberedUsers') || '[]');
+        setSavedUsers(users);
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -26,6 +38,21 @@ export default function Login() {
         try {
             const response = await api.post('/auth/login', { username, password });
             const { token, username: user, role } = response.data;
+
+            if (rememberMe) {
+                const existingUsers = JSON.parse(localStorage.getItem('rememberedUsers') || '[]');
+                if (!existingUsers.some((u: any) => u.username === username)) {
+                    const updatedUsers = [...existingUsers, {
+                        username,
+                        // In a real app we wouldn't store passwords like this, but for this demo request:
+                        password,
+                        avatarOffset: Math.floor(Math.random() * 8)
+                    }];
+                    localStorage.setItem('rememberedUsers', JSON.stringify(updatedUsers));
+                    setSavedUsers(updatedUsers); // Update state immediately
+                }
+            }
+
             login(token, user, role);
             toast({ title: 'Welcome back!', description: 'Logged in successfully' });
             navigate(role === 'ADMIN' ? '/admin/dashboard' : '/dashboard');
@@ -34,6 +61,13 @@ export default function Login() {
         } finally {
             setIsLoading(false);
         }
+    };
+
+    const handleRemoveUser = (e: React.MouseEvent, userToRemove: string) => {
+        e.stopPropagation();
+        const updatedUsers = savedUsers.filter(u => u.username !== userToRemove);
+        setSavedUsers(updatedUsers);
+        localStorage.setItem('rememberedUsers', JSON.stringify(updatedUsers));
     };
 
     return (
@@ -106,35 +140,50 @@ export default function Login() {
                                     className="h-11 bg-slate-50 dark:bg-slate-900 border-slate-200 focus:border-emerald-500 focus:ring-emerald-500"
                                 />
                                 <AnimatePresence>
-                                    {showCredentials && (username === '') && (
+                                    {showCredentials && (username === '') && savedUsers.length > 0 && (
                                         <motion.div
                                             initial={{ opacity: 0, y: 10 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0, y: 10 }}
                                             className="absolute left-0 top-full mt-2 w-full z-50 pointer-events-none"
                                         >
-                                            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl p-3 pointer-events-auto cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-750 transition-colors"
-                                                onClick={() => {
-                                                    setUsername('admin');
-                                                    setPassword('password');
-                                                    setShowCredentials(false);
-                                                }}>
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
-                                                        <User className="w-4 h-4" />
-                                                    </div>
-                                                    <div className="flex-1">
-                                                        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Click to fill demo user</p>
-                                                        <div className="flex items-center gap-2 mt-0.5">
-                                                            <span className="text-sm font-bold text-slate-700 dark:text-slate-200">admin</span>
-                                                            <span className="text-slate-300 dark:text-slate-600">•</span>
-                                                            <div className="flex gap-0.5">
-                                                                {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
-                                                                    <div key={i} className="w-1 h-1 rounded-full bg-slate-400 dark:bg-slate-500"></div>
-                                                                ))}
+                                            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl overflow-hidden pointer-events-auto">
+                                                <div className="px-3 py-2 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-700">
+                                                    <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Saved Accounts</p>
+                                                </div>
+                                                <div className="max-h-60 overflow-y-auto">
+                                                    {savedUsers.map((user: SavedUser, idx) => (
+                                                        <div
+                                                            key={idx}
+                                                            className="flex items-center gap-3 p-3 hover:bg-slate-50 dark:hover:bg-slate-750 transition-colors cursor-pointer group"
+                                                            onClick={() => {
+                                                                setUsername(user.username);
+                                                                setPassword(user.password || '');
+                                                                setShowCredentials(false);
+                                                            }}
+                                                        >
+                                                            <div className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shrink-0">
+                                                                <User className="w-4 h-4" />
                                                             </div>
+                                                            <div className="flex-1 min-w-0">
+                                                                <p className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">{user.username}</p>
+                                                                <div className="flex items-center gap-1">
+                                                                    <div className="flex gap-0.5">
+                                                                        {[1, 2, 3, 4, 5, 6].map(i => (
+                                                                            <div key={i} className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-600"></div>
+                                                                        ))}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <button
+                                                                onClick={(e) => handleRemoveUser(e, user.username)}
+                                                                className="p-1 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded opacity-0 group-hover:opacity-100 transition-all"
+                                                                title="Remove account"
+                                                            >
+                                                                <X className="w-4 h-4" />
+                                                            </button>
                                                         </div>
-                                                    </div>
+                                                    ))}
                                                 </div>
                                             </div>
                                         </motion.div>
@@ -185,7 +234,7 @@ export default function Login() {
                                     </div>
                                     <div className="ml-2 text-sm leading-6">
                                         <label htmlFor="remember" className="font-medium text-slate-700 dark:text-slate-300">
-                                            Remember for 30 days
+                                            Remember me
                                         </label>
                                     </div>
                                 </div>

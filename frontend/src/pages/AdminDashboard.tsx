@@ -102,6 +102,9 @@ export default function AdminDashboard() {
                 </Card>
 
                 <Card className="border-none shadow-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white relative overflow-hidden group border-slate-200 hover:shadow-xl transition-all duration-300">
+                    <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity text-emerald-500">
+                        <Eye className="w-24 h-24" />
+                    </div>
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
                         <CardTitle className="text-sm font-medium text-slate-500">Total Views</CardTitle>
                         <Eye className="h-4 w-4 text-slate-400 group-hover:text-emerald-500 transition-colors" />
@@ -113,6 +116,9 @@ export default function AdminDashboard() {
                 </Card>
 
                 <Card className="border-none shadow-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white relative overflow-hidden group border-slate-200 hover:shadow-xl transition-all duration-300">
+                    <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity text-emerald-500">
+                        <BarChart className="w-24 h-24" />
+                    </div>
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
                         <CardTitle className="text-sm font-medium text-slate-500">Categories</CardTitle>
                         <BarChart className="h-4 w-4 text-slate-400 group-hover:text-emerald-500 transition-colors" />

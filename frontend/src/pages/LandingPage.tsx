@@ -226,7 +226,7 @@ export function LandingPage() {
                             ].map((feature, idx) => (
                                 <ScaleIn key={idx} delay={idx * 0.1}>
                                     <div
-                                        className="group relative p-8 bg-[#f5fbf7] border border-slate-200/60 rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200/80"
+                                        className="group relative p-8 bg-[#f5fbf7] border border-slate-200/60 rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200/80 h-full"
                                     >
                                         {/* Gradient Background on Hover */}
                                         <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/50 to-teal-50/30 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>

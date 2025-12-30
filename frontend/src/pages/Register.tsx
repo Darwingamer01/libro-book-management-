@@ -5,7 +5,7 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { useToast } from '../hooks/use-toast';
-import { BookOpen, ArrowLeft } from 'lucide-react';
+import { BookOpen, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function Register() {
@@ -13,6 +13,7 @@ export default function Register() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const { toast } = useToast();
     const [isLoading, setIsLoading] = useState(false);
@@ -120,14 +121,27 @@ export default function Register() {
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="password">Password</Label>
-                            <Input
-                                id="password"
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                                className="h-11 bg-slate-50 dark:bg-slate-900 border-slate-200 focus:border-emerald-500 focus:ring-emerald-500"
-                            />
+                            <div className="relative">
+                                <Input
+                                    id="password"
+                                    type={showPassword ? "text" : "password"}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                    className="h-11 bg-slate-50 dark:bg-slate-900 border-slate-200 focus:border-emerald-500 focus:ring-emerald-500 pr-10"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-900 focus:outline-none"
+                                >
+                                    {showPassword ? (
+                                        <EyeOff className="w-4 h-4" />
+                                    ) : (
+                                        <Eye className="w-4 h-4" />
+                                    )}
+                                </button>
+                            </div>
                         </div>
                         <Button type="submit" className="w-full h-11 bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-500/25 mt-2 transition-all hover:scale-[1.02]" disabled={isLoading}>
                             {isLoading ? "Creating Account..." : "Create Account"}

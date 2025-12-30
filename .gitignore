@@ -1,0 +1,23 @@
+# Java
+target/
+*.class
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+.settings/
+
+# IntelliJ
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# Node
+node_modules/
+dist/
+.env
+.DS_Store
+coverage/

@@ -75,11 +75,11 @@ export function LandingPage() {
 
                             {/* Feature Pills */}
                             <div className="flex flex-wrap items-center gap-4 text-sm">
-                                <div className="flex items-center gap-2 px-4 py-2 bg-white/60 backdrop-blur-sm border border-slate-200/60 rounded-full">
+                                <div className="flex items-center gap-2 px-4 py-2 bg-[#f5fbf7] backdrop-blur-sm border border-slate-200/60 rounded-full">
                                     <Shield className="w-4 h-4 text-emerald-600" />
                                     <span className="text-slate-700">Free forever</span>
                                 </div>
-                                <div className="flex items-center gap-2 px-4 py-2 bg-white/60 backdrop-blur-sm border border-slate-200/60 rounded-full">
+                                <div className="flex items-center gap-2 px-4 py-2 bg-[#f5fbf7] backdrop-blur-sm border border-slate-200/60 rounded-full">
                                     <Zap className="w-4 h-4 text-emerald-600" />
                                     <span className="text-slate-700">No setup required</span>
                                 </div>
@@ -137,7 +137,7 @@ export function LandingPage() {
 
                                     {/* Card */}
                                     <ScaleIn delay={idx * 0.1}>
-                                        <div className="relative p-8 bg-white border border-slate-200/60 rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group-hover:border-emerald-200/80 z-10">
+                                        <div className="relative p-8 bg-[#f5fbf7] border border-slate-200/60 rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group-hover:border-emerald-200/80 z-10">
                                             {/* Step Number */}
                                             <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 text-white text-xl font-bold rounded-2xl flex items-center justify-center shadow-lg rotate-12 group-hover:rotate-0 transition-transform">
                                                 {step.step}
@@ -226,7 +226,7 @@ export function LandingPage() {
                             ].map((feature, idx) => (
                                 <ScaleIn key={idx} delay={idx * 0.1}>
                                     <div
-                                        className="group relative p-8 bg-white border border-slate-200/60 rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200/80"
+                                        className="group relative p-8 bg-[#f5fbf7] border border-slate-200/60 rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200/80"
                                     >
                                         {/* Gradient Background on Hover */}
                                         <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/50 to-teal-50/30 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>

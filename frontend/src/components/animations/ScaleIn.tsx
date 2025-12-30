@@ -13,6 +13,7 @@ export function ScaleIn({ children, delay = 0 }: ScaleInProps) {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay }}
+            className="h-full"
         >
             {children}
         </motion.div>

@@ -137,7 +137,7 @@ export function LandingPage() {
 
                                     {/* Card */}
                                     <ScaleIn delay={idx * 0.1}>
-                                        <div className="relative p-8 bg-[#f5fbf7] border border-slate-200/60 rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group-hover:border-emerald-200/80 z-10">
+                                        <div className="relative p-8 bg-[#f5fbf7] border border-slate-200/60 rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group-hover:border-emerald-200/80 z-10 h-full">
                                             {/* Step Number */}
                                             <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 text-white text-xl font-bold rounded-2xl flex items-center justify-center shadow-lg rotate-12 group-hover:rotate-0 transition-transform">
                                                 {step.step}

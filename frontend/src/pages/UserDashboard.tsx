@@ -122,7 +122,7 @@ export default function UserDashboard() {
                 ) : (
                     <motion.div variants={containerVariants} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {recentBooks.map((book) => (
-                            <motion.div key={book.id} variants={itemVariants}>
+                            <motion.div key={book.id} variants={itemVariants} className="h-full">
                                 <BookCard book={book} onDelete={() => { }} onEdit={() => { }} hideActions />
                             </motion.div>
                         ))}

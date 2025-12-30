@@ -34,9 +34,8 @@ export function Footer() {
                     <div>
                         <h3 className="text-white font-semibold mb-4">Product</h3>
                         <ul className="space-y-2">
-                            <li><a href="#" className="hover:text-emerald-400 transition-colors">Features</a></li>
-                            <li><a href="#" className="hover:text-emerald-400 transition-colors">Pricing</a></li>
-                            <li><a href="#" className="hover:text-emerald-400 transition-colors">FAQ</a></li>
+                            <li><Link to="/features" className="hover:text-emerald-400 transition-colors">Features</Link></li>
+                            <li><Link to="/faq" className="hover:text-emerald-400 transition-colors">FAQ</Link></li>
                         </ul>
                     </div>
 
@@ -44,9 +43,9 @@ export function Footer() {
                     <div>
                         <h3 className="text-white font-semibold mb-4">Company</h3>
                         <ul className="space-y-2">
-                            <li><a href="#" className="hover:text-emerald-400 transition-colors">About</a></li>
-                            <li><a href="#" className="hover:text-emerald-400 transition-colors">Blog</a></li>
-                            <li><a href="#" className="hover:text-emerald-400 transition-colors">Contact</a></li>
+                            <li><Link to="/about" className="hover:text-emerald-400 transition-colors">About</Link></li>
+                            <li><Link to="/blog" className="hover:text-emerald-400 transition-colors">Blog</Link></li>
+                            <li><Link to="/contact" className="hover:text-emerald-400 transition-colors">Contact</Link></li>
                         </ul>
                     </div>
                 </div>

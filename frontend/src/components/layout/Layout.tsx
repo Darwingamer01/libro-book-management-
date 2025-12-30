@@ -13,7 +13,18 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     const location = useLocation();
     const { user } = useAuth();
-    const isFullWidthPage = ['/', '/login', '/register', '/privacy', '/terms'].includes(location.pathname);
+    const isFullWidthPage = [
+        '/',
+        '/login',
+        '/register',
+        '/privacy',
+        '/terms',
+        '/features',
+        '/faq',
+        '/about',
+        '/contact',
+        '/blog'
+    ].includes(location.pathname);
     const shouldHideHeader = ['/login', '/register'].includes(location.pathname);
     const isAdminPage = location.pathname.startsWith('/admin');
     const isLandingPage = location.pathname === '/';

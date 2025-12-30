@@ -27,6 +27,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onEdit, onDelete, hideActions
             animate={{ opacity: 1, scale: 1 }}
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
+            className="h-full"
         >
             <Card className="h-full flex flex-col hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300 border-slate-200/60 dark:border-slate-800 bg-white dark:bg-slate-900 group">
                 <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">

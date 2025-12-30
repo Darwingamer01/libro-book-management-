@@ -1,12 +1,12 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { BookOpen, LogOut, LayoutDashboard, BookMarked, Users } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { Button } from '../ui/button';
+
 
 export function AdminHeader() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { logout } = useAuth();
+    const { logout, user } = useAuth();
 
     const handleLogout = () => {
         logout();
@@ -61,15 +61,37 @@ export function AdminHeader() {
 
                     {/* Actions */}
                     <div className="flex items-center gap-4">
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={handleLogout}
-                            className="text-slate-400 hover:text-white hover:bg-red-900/20 hover:text-red-400 transition-colors"
-                        >
-                            <LogOut className="w-4 h-4 mr-2" />
-                            Sign out
-                        </Button>
+                        {/* User Profile Dropdown */}
+                        <div className="relative group">
+                            <button className="flex items-center gap-2 focus:outline-none">
+                                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-medium shadow-md group-hover:shadow-emerald-500/20 transition-all">
+                                    {user?.username?.charAt(0).toUpperCase()}
+                                </div>
+                            </button>
+
+                            {/* Dropdown Card */}
+                            <div className="absolute right-0 top-full mt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right z-50 pt-2">
+                                <div className="bg-slate-900 border border-slate-800 rounded-xl shadow-2xl overflow-hidden ring-1 ring-black/5">
+                                    <div className="p-4 border-b border-slate-800 bg-slate-900/50">
+                                        <p className="text-sm font-medium text-white">{user?.username}</p>
+                                        <p className="text-xs text-slate-400 mt-0.5 truncate">user@example.com</p>
+                                    </div>
+                                    <div className="p-2 space-y-1">
+                                        <button className="w-full text-left px-3 py-2 text-sm text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg transition-colors flex items-center gap-2">
+                                            <div className="w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[10px]">?</div>
+                                            Change Password
+                                        </button>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="w-full text-left px-3 py-2 text-sm text-red-400 hover:bg-red-900/20 hover:text-red-300 rounded-lg transition-colors flex items-center gap-2"
+                                        >
+                                            <LogOut className="w-4 h-4" />
+                                            Sign out
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </nav>

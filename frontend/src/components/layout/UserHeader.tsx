@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { BookOpen, LogOut, LayoutDashboard, Library } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { Button } from '../ui/button';
+
 
 export function UserHeader() {
     const location = useLocation();
@@ -88,15 +88,6 @@ export function UserHeader() {
                                 </div>
                             </div>
                         </div>
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={handleLogout}
-                            className="text-slate-400 hover:text-white hover:bg-red-900/20 hover:text-red-400 transition-colors"
-                        >
-                            <LogOut className="w-4 h-4 mr-2" />
-                            Sign out
-                        </Button>
                     </div>
                 </div>
             </nav>

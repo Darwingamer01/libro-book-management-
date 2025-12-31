@@ -331,16 +331,19 @@ export function LandingPage() {
 
                         <div className="flex flex-wrap justify-center gap-4">
                             <Link
-                                to="/browse"
+                                to="/register"
                                 className="inline-flex items-center gap-2.5 px-8 py-5 bg-white hover:bg-slate-50 text-emerald-600 font-bold rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-0.5 text-lg"
                             >
                                 Get Started Now
                                 <ArrowRight className="w-6 h-6" />
                             </Link>
 
-                            <button className="inline-flex items-center gap-2.5 px-8 py-5 bg-transparent hover:bg-white/10 text-white font-bold rounded-xl border-2 border-white/30 hover:border-white/50 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 text-lg">
+                            <Link
+                                to="/learn-more"
+                                className="inline-flex items-center gap-2.5 px-8 py-5 bg-transparent hover:bg-white/10 text-white font-bold rounded-xl border-2 border-white/30 hover:border-white/50 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 text-lg"
+                            >
                                 Learn More
-                            </button>
+                            </Link>
                         </div>
 
                         <p className="mt-8 text-emerald-100 text-sm">

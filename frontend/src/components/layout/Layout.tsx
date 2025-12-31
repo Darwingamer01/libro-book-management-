@@ -23,7 +23,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         '/faq',
         '/about',
         '/contact',
-        '/blog'
+        '/blog',
+        '/learn-more'
     ].includes(location.pathname);
     const shouldHideHeader = ['/login', '/register'].includes(location.pathname);
     const isAdminPage = location.pathname.startsWith('/admin');

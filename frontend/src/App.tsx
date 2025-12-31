@@ -15,17 +15,22 @@ import FAQ from '@/pages/FAQ';
 import About from '@/pages/About';
 import Contact from '@/pages/Contact';
 import Blog from '@/pages/Blog';
+import LearnMore from '@/pages/LearnMore';
 import { AuthProvider } from '@/context/AuthContext';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
+
+import ScrollToTop from '@/components/utils/ScrollToTop';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <AuthProvider>
         <Layout>
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<LandingPage />} />
+            <Route path="/learn-more" element={<LearnMore />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />

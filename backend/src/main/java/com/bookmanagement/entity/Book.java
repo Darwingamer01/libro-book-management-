@@ -60,7 +60,7 @@ public class Book {
 
     // --- Hybrid Platform Fields ---
 
-    private Boolean isPhysical = false;
+    private Boolean isPhysical = true;
     private Boolean isDigital = false;
 
     // Physical Book Fields

@@ -47,8 +47,13 @@ public class LibrarianController {
     }
 
     @PostMapping("/issue")
-    public ResponseEntity<BorrowingRecord> issueBook(@RequestBody com.bookmanagement.dto.BorrowRequest request) {
-        return ResponseEntity.ok(borrowingService.borrowBook(request));
+    public ResponseEntity<?> issueBook(@RequestBody com.bookmanagement.dto.BorrowRequest request) {
+        try {
+            return ResponseEntity.ok(borrowingService.borrowBook(request));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(java.util.Map.of("message", e.getMessage()));
+        }
     }
 
     @PostMapping("/return/{recordId}")

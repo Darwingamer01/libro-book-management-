@@ -1,7 +1,7 @@
 // components/3d/Scene3D.tsx - BOOK POSITIONED RIGHT
 // components/3d/Scene3D.tsx - PROPERLY POSITIONED WITH SHADOW
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Environment, ContactShadows, Lightformer } from '@react-three/drei';
+import { OrbitControls, Environment, Lightformer } from '@react-three/drei';
 import { Suspense } from 'react';
 import * as THREE from 'three';
 import { FloatingBook } from './FloatingBook';
@@ -76,15 +76,7 @@ export function Scene3D() {
                     </group>
 
                     {/* SOFT CONTACT SHADOW - Calibrated for Visibility */}
-                    <ContactShadows
-                        position={[3.5, -2.0, 0]} // Aligned and closer
-                        opacity={0.7} // High opacity to ensure visibility
-                        scale={20} // Smaller scale = darker/denser shadow
-                        blur={2} // Less blur = more definition
-                        far={4.5}
-                        resolution={1024}
-                        color="#000000"
-                    />
+
 
                     {/* ENVIRONMENT */}
                     <Environment preset="city" />

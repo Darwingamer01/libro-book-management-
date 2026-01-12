@@ -15,6 +15,9 @@ const bookSchema = z.object({
     author: z.string().min(1, "Author is required"),
     description: z.string().optional(),
     category: z.string().optional(),
+    totalCopies: z.coerce.number().min(0, "Copies must be 0 or more").default(1),
+    // Handle "true"/"false" strings from radio inputs and transform to boolean
+    isPhysical: z.union([z.boolean(), z.string()]).transform((val) => val === true || val === 'true'),
 });
 
 type BookFormValues = z.infer<typeof bookSchema>;
@@ -32,7 +35,9 @@ const BookForm: React.FC<BookFormProps> = ({ book, onSuccess, onCancel }) => {
             title: '',
             author: '',
             description: '',
-            category: ''
+            category: '',
+            totalCopies: 1,
+            isPhysical: true
         }
     });
 
@@ -42,14 +47,18 @@ const BookForm: React.FC<BookFormProps> = ({ book, onSuccess, onCancel }) => {
                 title: book.title,
                 author: book.author,
                 description: book.description || '',
-                category: book.category || ''
+                category: book.category || '',
+                totalCopies: book.totalCopies || 1,
+                isPhysical: book.isPhysical ?? true
             });
         } else {
             reset({
                 title: '',
                 author: '',
                 description: '',
-                category: ''
+                category: '',
+                totalCopies: 1,
+                isPhysical: true
             });
         }
     }, [book, reset]);
@@ -59,7 +68,13 @@ const BookForm: React.FC<BookFormProps> = ({ book, onSuccess, onCancel }) => {
             if (book && book.id) {
                 await updateBook(book.id, data as any);
             } else {
-                await createBook(data as any);
+                // Logic: If creating new book, set availableCopies = totalCopies initially
+                const newBookData = {
+                    ...data,
+                    availableCopies: data.totalCopies,
+                    // If isPhysical is true, ensure format is PHYSICAL_ONLY (or handled by backend logic if defaulted)
+                };
+                await createBook(newBookData as any);
             }
             onSuccess();
             toast.success(book ? "Book updated successfully" : "Book added successfully");
@@ -101,6 +116,45 @@ const BookForm: React.FC<BookFormProps> = ({ book, onSuccess, onCancel }) => {
                     placeholder="e.g. Fiction, History"
                     className="focus-visible:ring-emerald-500 border-slate-200"
                 />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                    <Label htmlFor="totalCopies" className="text-slate-700 font-medium">Total Copies</Label>
+                    <Input
+                        id="totalCopies"
+                        type="number"
+                        min="0"
+                        {...register("totalCopies")}
+                        className="focus-visible:ring-emerald-500 border-slate-200"
+                    />
+                    {errors.totalCopies && <p className="text-sm text-red-500 font-medium">{errors.totalCopies.message}</p>}
+                </div>
+                <div className="space-y-2">
+                    <Label className="text-slate-700 font-medium block">Format</Label>
+                    <div className="flex items-center space-x-4 pt-2">
+                        <label className="flex items-center space-x-2 cursor-pointer">
+                            <input
+                                type="radio"
+                                value="true"
+                                {...register("isPhysical")}
+                                defaultChecked
+                                className="text-emerald-600 focus:ring-emerald-500"
+                            />
+                            <span className="text-sm text-slate-700">Physical</span>
+                        </label>
+                        <label className="flex items-center space-x-2 cursor-pointer">
+                            <input // Future proofing for Digital support
+                                type="radio"
+                                value="false"
+                                disabled // Disable "Digital" for now until Phase 2 fully ready or logic handled
+                                {...register("isPhysical")}
+                                className="text-slate-400 focus:ring-slate-400"
+                            />
+                            <span className="text-sm text-slate-400">Digital (Coming Soon)</span>
+                        </label>
+                    </div>
+                </div>
             </div>
 
             <div className="space-y-2">

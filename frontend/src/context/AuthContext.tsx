@@ -5,7 +5,7 @@ import api from '../services/api';
 
 export interface User {
     username: string;
-    role: 'ADMIN' | 'USER';
+    role: 'ADMIN' | 'USER' | 'LIBRARIAN';
 }
 
 interface AuthContextType {
@@ -15,6 +15,7 @@ interface AuthContextType {
     logout: () => void;
     isAuthenticated: boolean;
     isAdmin: boolean;
+    isLibrarian: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -44,7 +45,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const login = (newToken: string, username: string, role: string) => {
         localStorage.setItem('token', newToken);
         setToken(newToken);
-        setUser({ username, role: role as 'ADMIN' | 'USER' });
+        setUser({ username, role: role as 'ADMIN' | 'USER' | 'LIBRARIAN' });
         api.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
     };
 
@@ -62,7 +63,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             login,
             logout,
             isAuthenticated: !!user,
-            isAdmin: user?.role === 'ADMIN'
+            isAdmin: user?.role === 'ADMIN',
+            isLibrarian: user?.role === 'LIBRARIAN'
         }}>
             {children}
         </AuthContext.Provider>

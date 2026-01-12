@@ -55,7 +55,14 @@ export default function Login() {
 
             login(token, user, role);
             toast({ title: 'Welcome back!', description: 'Logged in successfully' });
-            navigate(role === 'ADMIN' ? '/admin/dashboard' : '/dashboard');
+
+            if (role === 'ADMIN') {
+                navigate('/admin/dashboard');
+            } else if (role === 'LIBRARIAN') {
+                navigate('/librarian/dashboard');
+            } else {
+                navigate('/dashboard');
+            }
         } catch (error) {
             toast({ variant: 'destructive', title: 'Login Failed', description: 'Please check your credentials and try again.' });
         } finally {

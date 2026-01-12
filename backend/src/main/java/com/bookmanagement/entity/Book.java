@@ -46,7 +46,7 @@ public class Book {
     private String coverImageUrl;
 
     @Column(length = 50000)
-    private String content; // Content or URL/Path to content
+    private String content; // Content for HTML books or description
 
     @Min(value = 1, message = "Page count must be positive")
     private Integer pageCount;
@@ -57,6 +57,32 @@ public class Book {
     private Boolean isAvailable = true;
 
     private Integer viewCount = 0;
+
+    // --- Hybrid Platform Fields ---
+
+    private Boolean isPhysical = false;
+    private Boolean isDigital = false;
+
+    // Physical Book Fields
+    @Column(nullable = false)
+    private Integer availableCopies = 1; // Default to 1
+
+    @Column(nullable = false)
+    private Integer totalCopies = 1; // Default to 1
+
+    private String shelfLocation;
+
+    // Digital Book Fields
+    private String contentUrl; // URL for PDF/EPUB file
+
+    @Enumerated(EnumType.STRING)
+    private BookFormat format;
+
+    @Enumerated(EnumType.STRING)
+    private BookSource source;
+
+    // Self-Publishing
+    private Long authorId; // Link to user who published this
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

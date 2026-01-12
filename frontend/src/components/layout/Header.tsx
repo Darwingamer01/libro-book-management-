@@ -26,17 +26,26 @@ export function Header() {
                         <Link
                             to="/browse"
                             className={`text-sm font-medium transition-colors ${isActive('/browse')
-                                    ? 'text-emerald-600'
-                                    : 'text-slate-700 hover:text-emerald-600'
+                                ? 'text-emerald-600'
+                                : 'text-slate-700 hover:text-emerald-600'
                                 }`}
                         >
                             Browse
                         </Link>
                         <Link
+                            to="/my-books"
+                            className={`text-sm font-medium transition-colors ${isActive('/my-books')
+                                ? 'text-emerald-600'
+                                : 'text-slate-700 hover:text-emerald-600'
+                                }`}
+                        >
+                            My Books
+                        </Link>
+                        <Link
                             to="/about"
                             className={`text-sm font-medium transition-colors ${isActive('/about')
-                                    ? 'text-emerald-600'
-                                    : 'text-slate-700 hover:text-emerald-600'
+                                ? 'text-emerald-600'
+                                : 'text-slate-700 hover:text-emerald-600'
                                 }`}
                         >
                             About
@@ -78,6 +87,13 @@ export function Header() {
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 Browse
+                            </Link>
+                            <Link
+                                to="/my-books"
+                                className="text-sm font-medium text-slate-700 hover:text-emerald-600"
+                                onClick={() => setMobileMenuOpen(false)}
+                            >
+                                My Books
                             </Link>
                             <Link
                                 to="/about"

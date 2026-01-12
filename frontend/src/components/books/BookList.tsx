@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import type { Book } from '@/types/Book';
 import { getBooks, deleteBook } from '@/services/bookService';
+import { borrowBook } from '@/services/borrowService';
 import BookCard from './BookCard';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
@@ -111,6 +112,21 @@ const BookList: React.FC = () => {
         fetchBooks();
     };
 
+    const handleBorrow = async (book: Book) => {
+        try {
+            // Hardcoded User ID 1 for MVP (Demo User)
+            // In real app, get from Auth Context
+            const userId = 1;
+            await borrowBook(book.id, userId);
+            toast.success(`Borrowed "${book.title}" successfully!`);
+            // Refresh books to update available copies
+            fetchBooks();
+        } catch (error) {
+            console.error("Failed to borrow book", error);
+            toast.error("Failed to borrow book. It might be out of stock.");
+        }
+    };
+
     if (loading) {
         return (
             <div className="flex items-center justify-center h-screen">
@@ -156,6 +172,7 @@ const BookList: React.FC = () => {
                                 book={book}
                                 onEdit={handleEdit}
                                 onDelete={handleDeleteClick}
+                                onBorrow={handleBorrow}
                             />
                         ))}
                     </AnimatePresence>
@@ -164,7 +181,7 @@ const BookList: React.FC = () => {
 
             {/* Create/Edit Modal */}
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <DialogContent className="sm:max-w-[500px]">
+                <DialogContent className="sm:max-w-[500px] max-h-[85vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
                     <DialogHeader>
                         <DialogTitle>{selectedBook ? 'Edit Book' : 'Add New Book'}</DialogTitle>
                         <DialogDescription>

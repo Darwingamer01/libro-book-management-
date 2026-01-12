@@ -16,6 +16,10 @@ import About from '@/pages/About';
 import Contact from '@/pages/Contact';
 import Blog from '@/pages/Blog';
 import LearnMore from '@/pages/LearnMore';
+import MyBooks from '@/pages/MyBooks';
+import LibrarianDashboard from '@/pages/librarian/Dashboard';
+import Inventory from '@/pages/librarian/Inventory';
+import Loans from '@/pages/librarian/Loans';
 import { AuthProvider } from '@/context/AuthContext';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 
@@ -45,14 +49,22 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="/dashboard" element={<UserDashboard />} />
               <Route path="/books" element={<BookList />} />
+              <Route path="/my-books" element={<MyBooks />} />
               <Route path="/books/:id" element={<BookDetail />} />
               <Route path="/read/:id" element={<BookReader />} />
             </Route>
 
             {/* Protected Admin Routes */}
-            <Route element={<ProtectedRoute adminOnly />}>
+            <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/books" element={<BookList />} />
+            </Route>
+
+            {/* Protected Librarian Routes */}
+            <Route element={<ProtectedRoute allowedRoles={['LIBRARIAN', 'ADMIN']} />}>
+              <Route path="/librarian/dashboard" element={<LibrarianDashboard />} />
+              <Route path="/librarian/inventory" element={<Inventory />} />
+              <Route path="/librarian/loans" element={<Loans />} />
             </Route>
 
             {/* Catch all */}
